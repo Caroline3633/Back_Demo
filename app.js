@@ -1,15 +1,17 @@
 
 //how to create server
 const express = require('express');
-
+const userRoute = require('./src/routes/userRoute')
 const app = express();
+
+const bodyParser = require('body-parser');
+
 
 
 
 let user = [
-
    { 
-       
+    id:1,  
     first_name: 'joy',
     last_name: 'mary',
     email: 'caro@gmail.com',
@@ -18,6 +20,7 @@ let user = [
 },
 
 {
+    id:2,
 first_name: 'jude',
 last_name: 'john',
 email: 'john@gmail.com',
@@ -27,6 +30,7 @@ password: 'pass'
 },
 
 {
+    id:3,
 first_name: 'mama',
 last_name: 'blessing',
 email: 'mama@gmail.com',
@@ -37,7 +41,7 @@ confirm: 'pass'
 },
 
 {
-
+    id:4,
     first_name: 'terna',
     last_name: 'ter',
     email: 'ter@gmail.com',
@@ -48,7 +52,7 @@ confirm: 'pass'
 },
 
 {
-
+   id:5,
     first_name: 'Nanen',
     last_name: 'Nege',
     email: 'nana@gmail.com',
@@ -58,19 +62,46 @@ confirm: 'pass'
 }
 ]
 
+app.use(bodyParser.urlencoded({extended:false}));
+app.use(bodyParser.json());
+
+app.use(userRoute);
 
 
-app.post('/user',(req,res) =>{
+app.get('/users',(req,res) =>{
     res.send(user);
 
 })
 
 
 app.get('/user',  (req, res) =>{
-    res.send(user)
+    //console.log(user[3].id)
+    const userId = req.query.id;
+    return res.send(user[userId]);
+    //if (user[2].id=2) {
+        //res.send(user[2]);  
+    
+   
+})
+// check if user exist!
+app.delete('/delete', (req,res) =>{
+   u = req.query.id;
+    if (!user[u]) {
+        return res.send('user not found');
+        
+    }
+
+    return res.send(user[u]);
+
 })
 
+
+
+ 
+//console.log(req.body);
+//console.log(req.url);
+
 app.listen(7000,() => {
-    console.log('server listening to port 7000'); 
+    console.log('server listening to port 7000');
 
 })
