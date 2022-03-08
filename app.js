@@ -62,16 +62,7 @@ confirm: 'pass'
 }
 ]
 
-app.use(bodyParser.urlencoded({extended:false}));
-app.use(bodyParser.json());
-
-app.use(userRoute);
-
-
-app.get('/users',(req,res) =>{
-    res.send(user);
-
-})
+-
 
 
 app.get('/user',  (req, res) =>{
